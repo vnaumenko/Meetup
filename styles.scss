@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital@0;1&family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+$russian-violet: #231942;
+$umber: #6f584b;
+$little-boy-blue: #84a6d9;
+$emerald: #23ce6b;
+$beige: #f2f3d9;
+
+$primary: $emerald;
+$info: $beige;
+$secondary: $little-boy-blue;
+$danger: $russian-violet;
+
+$link-color: $russian-violet;
+$link-hover-color: rgba($russian-violet, .75);
+$link-decoration: none;
+
+$font-family-sans-serif: 'Lora', serif;
+$headings-font-family: 'Rubik', serif;
+
+$border-radius-sm:            .2rem;
+$border-radius:               .25rem;
+$border-radius-lg:            .75rem;
+
+
+$btn-border-radius-lg: $border-radius;
+
+$min-contrast-ratio: 0; /// ????
+
+$input-btn-font-family: $headings-font-family;
+
+$container-padding-x: 32px;
+
+
+@import "~bootstrap";
+
+
+@import "pages/pages";
+
+body {
+  background: linear-gradient(90deg, #A3BDED 0%, #6991C7 100%);
+  overflow-x: hidden;
+}
+
+.btn {
+  text-transform: uppercase;
+}
+
+h1,h2,h3,h4,h5,h6 {
+  text-transform: uppercase;
+  font-weight: bold;
+}

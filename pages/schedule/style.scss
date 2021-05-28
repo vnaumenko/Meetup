@@ -1,0 +1,90 @@
+.schedule {
+  border-radius: $border-radius-lg * 2 $border-radius-lg * 2 0 0;
+  background-color: white;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  margin-top: 6rem;
+  min-height: calc(100vh - 6rem);
+  .minimenu {
+    margin-top: -4rem;
+    position: absolute;
+  }
+  .container {
+    position: relative;
+  }
+  .title {
+    text-align: center;
+    padding-bottom: 4rem;
+    @include media-breakpoint-up(lg) {
+      text-align: left;
+    }
+  }
+  .subtitle-text {
+    @include media-breakpoint-up(lg) {
+      max-width: 600px;
+    }
+  }
+  .timetable {
+    margin-top: 3rem;
+    &-day {
+      margin-bottom: 2rem;
+      &_title {
+        font-size: 1.75rem;
+        text-transform: uppercase;
+        font-family: $headings-font-family;
+      }
+    }
+    &-event {
+      background-color: $info;
+      padding: 2rem;
+      border-radius: $border-radius-lg;
+      margin-bottom: 1rem;
+      .type {
+        text-transform: uppercase;
+        font-family: $headings-font-family;
+        color: $primary;
+        margin-bottom: .25em;
+      }
+      .title {
+        text-align: left;
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding-bottom: 0;
+        font-family: $headings-font-family;
+        margin-bottom: .25em;
+      }
+      .name {
+        font-size: 1.25rem;
+        margin-bottom: 1em;
+      }
+      .info {
+        display: flex;
+        flex-direction: row;
+        .photo {
+          flex: 0 0 100px;
+          max-width: 100px;
+          margin-right: 1rem;
+          img {
+            border-radius: 100px;
+          }
+        }
+        .desc {
+          flex: 0 1 100%;
+        }
+      }
+    }
+  }
+  .illustration {
+    display: none;
+    @include media-breakpoint-up(lg) {
+      display: block;
+      position: absolute;
+      top: -9rem;
+      right: -10%;
+    }
+    @include media-breakpoint-up(xl) {
+      right: 0;
+    }
+  }
+}

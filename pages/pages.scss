@@ -1,0 +1,35 @@
+@import "faq/style";
+@import "main/style";
+@import "schedule/style";
+
+.minimenu {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 0;
+  margin: 0;
+  li {
+    a {
+      color: $primary;
+      font-family: $headings-font-family;
+      text-transform: uppercase;
+      font-size: .85rem;
+    }
+    &:not(:last-child) {
+      padding-right: 1rem;
+      margin-right: 1rem;
+      position: relative;
+      &:after {
+        content: "•";
+        position: absolute;
+        right: -5px;
+        width: 10px;
+        display: block;
+        text-align: center;
+        top: 0;
+        color: $secondary;
+      }
+    }
+  }
+}
