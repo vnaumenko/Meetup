@@ -3,11 +3,35 @@ import Men1 from '../../public/men1.svg';
 import Men2 from '../../public/men2.svg';
 import Men3 from '../../public/men3.svg';
 import PeopleBg from '../../public/people_bg.svg';
+import {useDrag, useMove} from "react-use-gesture";
+import {animated, useSpring} from "react-spring";
 
+
+const AnimatedMen1 = animated(Men1)
+const AnimatedMen2 = animated(Men2)
+const AnimatedMen3 = animated(Men3)
 
 function Main() {
+
+    const calc = (x, y) => [x - window.innerWidth / 50, y - window.innerHeight / 50]
+    const trans1 = (x, y) => `translate3d(${x / 50}px,${y / 50}px,0)`
+    const trans2 = (x, y) => `translate3d(${x / 15 + 35}px,${y / 15 - 230}px,0)`
+    const [props, set] = useSpring(() => ({ xy: [0, 0], config: { mass: 10, tension: 550, friction: 140 } }))
+
+    const bind = useMove(({xy}) => {
+        const [x, y] = xy;
+        set({ xy: calc(x, y) })
+    })
+
+
+    const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }))
+
+    const bindDrag = useDrag(({ down, movement: [mx, my] }) => {
+        api.start({ x: down ? mx : 0, y: down ? my : 0 })
+    })
+
     return (
-        <div id={'main'}>
+        <div id={'main'} {...bind()}>
             <div className="container">
                 <section className="main">
                     <div className="lead">
@@ -32,9 +56,10 @@ function Main() {
                         </div>
                     </div>
                     <div className="illustration">
-                        <Men1 className={'men1'} />
-                        <Men2 className={'men2'} />
-                        <Men3 className={'men3'} />
+                        <AnimatedMen1 className={'men1'} style={{ transform: props.xy.interpolate(trans1) }} />
+                        <p className="hiddenText">Hello</p>
+                        <AnimatedMen2 className={'men2'} {...bindDrag()} style={{ x, y }} />
+                        <AnimatedMen3 className={'men3'} style={{ transform: props.xy.interpolate(trans2) }}/>
                         <PeopleBg className={'bg'} />
                     </div>
                 </section>
