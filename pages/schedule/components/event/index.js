@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import HardIllustration from '../../../../public/hard.svg';
+import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
 function Event({ event }) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [form, updateForm] = useState({
     name: '',
     email: '',
+    skype: '',
   });
 
   const openModal = () => {
@@ -16,30 +19,46 @@ function Event({ event }) {
     setIsOpen(false);
   };
 
+  const onFieldChange = ({ target }) => {
+    const { id, value } = target;
+    updateForm((prevState) => ({ ...prevState, [id]: value }));
+  };
+
   const submitForm = (e) => {
+    const { name, email, skype } = form;
     e.preventDefault();
-    setIsOpen(false);
-    // eslint-disable-next-line no-console
-    console.log(form);
+    const formData = new FormData();
+    formData.set('name', name);
+    formData.set('email', email);
+    formData.set('skype', skype);
+    fetch('/api/register', { method: 'POST', body: formData }).then(() => {
+      setIsOpen(false);
+    });
+  };
+
+  const isSubmitDisabled = Object.values(form).some((value) => !value);
+
+  const renderIllustration = () => {
+    if (event.type === 'hard') return <HardIllustration />;
+    if (event.type === 'lifestyle') return <LifestyleIllustration />;
+    return null;
   };
 
   return (
     <>
-      <div className={'timetable-event'} key={event.id}>
-        <p className={'type'}>{event.type}</p>
-        <p className={'title'}>{event.title}</p>
-        <p className={'name'}>{event.speaker.name}</p>
-        <div className={'info'}>
-          <div className={'photo'}>
-            <img src={event.speaker.photo} alt={event.speaker.name} />
-          </div>
-          <div className="desc">
-            <p>{event.description}</p>
-            <button type={'button'} className={'btn btn-primary'} onClick={openModal}>
-              Записаться
-            </button>
+      <div className="timetable-event" key={event.id}>
+        <div className="header">
+          <p className="time">{event.type}</p>
+          <div className="person">
+            <p className="name">{event.speaker}</p>
+            <p className="department">{event.department}</p>
           </div>
         </div>
+        <p className="title">{event.label}</p>
+        <button type="button" className="btn btn-primary" onClick={openModal}>
+          Записаться
+        </button>
+        {renderIllustration()}
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -54,7 +73,7 @@ function Event({ event }) {
           <h1>{event.title}</h1>
           <time>27 июня, среда в 16:30</time>
         </div>
-        <div className={'form'}>
+        <div className="form">
           <form onSubmit={submitForm}>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">
@@ -65,12 +84,7 @@ function Event({ event }) {
                 className="form-control"
                 id="name"
                 value={form.name}
-                onChange={({ target }) => {
-                  updateForm((prevState) => ({
-                    ...prevState,
-                    name: target.value,
-                  }));
-                }}
+                onChange={onFieldChange}
               />
             </div>
             <div className="mb-4">
@@ -82,12 +96,19 @@ function Event({ event }) {
                 className="form-control"
                 id="email"
                 value={form.email}
-                onChange={({ target }) => {
-                  updateForm((prevState) => ({
-                    ...prevState,
-                    email: target.value,
-                  }));
-                }}
+                onChange={onFieldChange}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="skype" className="form-label">
+                Skype
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="skype"
+                value={form.skype}
+                onChange={onFieldChange}
               />
             </div>
             <button type="submit" className="btn btn-primary me-3">
