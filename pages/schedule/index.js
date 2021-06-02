@@ -56,28 +56,10 @@ function Schedule(props) {
 
 export async function getStaticProps() {
   const eventer = await Eventer.getEventer();
-  const records = eventer.getRecords();
-  console.log(records);
+  const events = eventer.getRecords();
   return {
     props: {
-      events: {
-        1: {
-          id: 1,
-          datetime: 1622636226801,
-          label: 'как варить пельмени, Варенники, Макароны, Сапоги или САМЫЙ ЛУЧШИЙ ДОКЛАД',
-          type: 'lifestyle',
-          department: 'Отдел новых открытий',
-          speaker: 'Дмитрий Дмитриев',
-        },
-        2: {
-          id: 2,
-          datetime: 162263600000,
-          label: 'Как варить манты?',
-          type: 'hard',
-          department: 'Отдел новых открытий',
-          speaker: 'Дмитрий Дмитриев',
-        },
-      },
+      events,
     },
   };
 }

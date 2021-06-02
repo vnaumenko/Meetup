@@ -11,20 +11,14 @@ export default async (req, res) => {
     });
   });
 
-  const { email: recordEmail, name: recordName, skype: recordSkype } = fields;
-  const record = {
-    isHandled: false,
-    recordDatetime: new Date().getTime(),
-    recordEmail,
-    recordName,
-    recordSkype,
-    meetupID: 1,
-  };
+  const { recordID } = fields;
+  console.log(recordID);
   const recorder = await Recorder.getRecorder();
-  await recorder.addRecord(record);
+  await recorder.toggleHandledStatus(recordID);
 
   res.status(200).json({ status: 'ok' });
 };
+
 export const config = {
   api: {
     bodyParser: false,
