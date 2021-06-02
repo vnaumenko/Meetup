@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { format } from 'date-fns';
+import HardIllustration from '../../../../public/hard.svg';
+import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
 function Event({ event }) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [form, updateForm] = useState({
     name: '',
     email: '',
-    skype: ''
+    skype: '',
   });
 
   const openModal = () => {
@@ -19,40 +22,52 @@ function Event({ event }) {
 
   const onFieldChange = ({ target }) => {
     const { id, value } = target;
-    updateForm((prevState) => ({ ...prevState, [id]: value,}));
-  }
-
-  const submitForm = (e) => {
-    const {name, email, skype} = form;
-    e.preventDefault();
-    const formData = new FormData();
-    formData.set('name', name)
-    formData.set('email', email)
-    formData.set('skype', skype)
-    fetch('/api/register', {method: 'POST', body: formData }).then(() => {
-      setIsOpen(false);
-    })
+    updateForm((prevState) => ({ ...prevState, [id]: value }));
   };
 
-  const isSubmitDisabled = Object.values(form).some(value => !value)
+  const submitForm = (e) => {
+    const { name, email, skype } = form;
+    e.preventDefault();
+    const formData = new FormData();
+    formData.set('name', name);
+    formData.set('email', email);
+    formData.set('skype', skype);
+    fetch('/api/register', { method: 'POST', body: formData }).then(() => {
+      setIsOpen(false);
+    });
+  };
+
+  const isSubmitDisabled = Object.values(form).some((value) => !value);
+
+  const renderIllustration = () => {
+    if (event.type === 'hard') return <HardIllustration />;
+    if (event.type === 'lifestyle') return <LifestyleIllustration />;
+    return null;
+  };
+
+  const renderTime = () => {
+    const eventDate = new Date(event.datetime);
+    const formatDate = format(eventDate, 'H:mm');
+
+    console.log(eventDate);
+    return formatDate;
+  };
 
   return (
     <>
-      <div className={'timetable-event'} key={event.id}>
-        <p className={'type'}>{event.type}</p>
-        <p className={'title'}>{event.title}</p>
-        <p className={'name'}>{event.speaker.name}</p>
-        <div className={'info'}>
-          <div className={'photo'}>
-            <img src={event.speaker.photo} alt={event.speaker.name} />
-          </div>
-          <div className="desc">
-            <p>{event.description}</p>
-            <button className={'btn btn-primary'} onClick={openModal}>
-              Записаться
-            </button>
+      <div className="timetable-event" key={event.id}>
+        <div className="header">
+          <p className="time">{renderTime()}</p>
+          <div className="person">
+            <p className="name">{event.speaker}</p>
+            <p className="department">{event.department}</p>
           </div>
         </div>
+        <p className="title">{event.label}</p>
+        <button type="button" className="btn btn-primary" onClick={openModal}>
+          Записаться
+        </button>
+        {renderIllustration()}
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -64,10 +79,10 @@ function Event({ event }) {
       >
         <div className="title">
           Вы записываетесь на
-          <h1>{event.title}</h1>
+          <h1>{event.label}</h1>
           <time>27 июня, среда в 16:30</time>
         </div>
-        <div className={'form'}>
+        <div className="form">
           <form onSubmit={submitForm}>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">
@@ -81,7 +96,7 @@ function Event({ event }) {
                 onChange={onFieldChange}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Рабочая почта
               </label>
