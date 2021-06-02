@@ -6,6 +6,7 @@ function Event({ event }) {
   const [form, updateForm] = useState({
     name: '',
     email: '',
+    skype: ''
   });
 
   const openModal = () => {
@@ -16,11 +17,24 @@ function Event({ event }) {
     setIsOpen(false);
   };
 
+  const onFieldChange = ({ target }) => {
+    const { id, value } = target;
+    updateForm((prevState) => ({ ...prevState, [id]: value,}));
+  }
+
   const submitForm = (e) => {
+    const {name, email, skype} = form;
     e.preventDefault();
-    setIsOpen(false);
-    console.log(form);
+    const formData = new FormData();
+    formData.set('name', name)
+    formData.set('email', email)
+    formData.set('skype', skype)
+    fetch('/api/register', {method: 'POST', body: formData }).then(() => {
+      setIsOpen(false);
+    })
   };
+
+  const isSubmitDisabled = Object.values(form).some(value => !value)
 
   return (
     <>
@@ -64,14 +78,7 @@ function Event({ event }) {
                 className="form-control"
                 id="name"
                 value={form.name}
-                onChange={({ target }) => {
-                  updateForm((prevState) => {
-                    return {
-                      ...prevState,
-                      name: target.value,
-                    };
-                  });
-                }}
+                onChange={onFieldChange}
               />
             </div>
             <div className="mb-4">
@@ -83,17 +90,22 @@ function Event({ event }) {
                 className="form-control"
                 id="email"
                 value={form.email}
-                onChange={({ target }) => {
-                  updateForm((prevState) => {
-                    return {
-                      ...prevState,
-                      email: target.value,
-                    };
-                  });
-                }}
+                onChange={onFieldChange}
               />
             </div>
-            <button type="submit" className="btn btn-primary me-3">
+            <div className="mb-4">
+              <label htmlFor="skype" className="form-label">
+                Skype
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="skype"
+                value={form.skype}
+                onChange={onFieldChange}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary me-3" disabled={isSubmitDisabled}>
               Записаться
             </button>
             <button type="submit" className="btn btn-link" onClick={closeModal}>

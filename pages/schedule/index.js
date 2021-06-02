@@ -2,39 +2,18 @@ import React from 'react';
 import Link from 'next/link';
 import ScheduleIcon from '../../public/schedule.svg';
 import Event from './components/event';
+import Eventer from "../../lib/Eventer";
 
-function Schedule() {
-  const events = [
-    {
-      id: 1,
-      type: 'lifestyle',
-      title: 'Как варить пельмени?',
-      description:
-        'Товарищи! консультация с широким активом влечет за собой процесс внедрения и модернизации существенных финансовых и административных условий.',
-      speaker: {
-        photo: 'https://placekitten.com/100/100',
-        name: 'Дмитрий Дмитриев',
-      },
-    },
-    {
-      id: 2,
-      type: 'lifestyle',
-      title: 'Как варить манты?',
-      description:
-        'Товарищи! консультация с широким активом влечет за собой процесс внедрения и модернизации существенных финансовых и административных условий.',
-      speaker: {
-        photo: 'https://placekitten.com/100/100',
-        name: 'Дмитрий Дмитриев',
-      },
-    },
-  ];
+function Schedule(props) {
+
+  const {events} = props;
 
   const renderTimetable = () => {
     const renderEvents = () =>
-      events.map((event) => {
+      Object.values(events).map((event) => {
         return (
           <div className="col-12 col-lg-6">
-            <Event event={event} />
+            <Event event={event}/>
           </div>
         );
       });
@@ -70,10 +49,45 @@ function Schedule() {
           дальнейших направлений развития.
         </p>
         {renderTimetable()}
-        <ScheduleIcon className={'illustration'} />
+        <ScheduleIcon className={'illustration'}/>
       </div>
     </div>
   );
 }
+
+export async function getStaticProps() {
+  const eventer = await Eventer.getEventer();
+  const records = eventer.getRecords();
+  console.log(records)
+  return {
+    props: {
+      events: {
+        1: {
+          id: 1,
+          type: 'lifestyle',
+          title: 'Как варить пельмени?',
+          description:
+            'Товарищи! консультация с широким активом влечет за собой процесс внедрения и модернизации существенных финансовых и административных условий.',
+          speaker: {
+            photo: 'https://placekitten.com/100/100',
+            name: 'Дмитрий Дмитриев',
+          },
+        },
+        2: {
+          id: 2,
+          type: 'lifestyle',
+          title: 'Как варить манты?',
+          description:
+            'Товарищи! консультация с широким активом влечет за собой процесс внедрения и модернизации существенных финансовых и административных условий.',
+          speaker: {
+            photo: 'https://placekitten.com/100/100',
+            name: 'Дмитрий Дмитриев',
+          },
+        },
+      }
+    }
+  }
+}
+
 
 export default Schedule;
