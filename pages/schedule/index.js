@@ -59,9 +59,9 @@ function Schedule(props) {
   };
 
   return (
-    <div id="schedule" className="schedule">
+    <div id="schedule" className="schedule basicPage">
       <div className="container">
-        <ul className="minimenu">
+        <ul className="miniMenu">
           <li>
             <Link href="/">Вернуться на главную</Link>
           </li>
