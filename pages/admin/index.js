@@ -1,12 +1,12 @@
-import {Records} from "./components/Records";
+import { Records } from './components/Records';
 
 function Admin() {
   return (
-    <div id={'faq'} className={'faq'}>
+    <div id="admin" className="admin basicPage">
       <div className="container">
-        <h1 className={'title'}>Управление всем</h1>
+        <h1 className="title mb-5">Управление всем</h1>
+        <Records />
       </div>
-      <Records/>
     </div>
   );
 }

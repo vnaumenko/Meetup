@@ -3,18 +3,18 @@ import FaqIcon from '../../public/faq.svg';
 
 function Faq() {
   return (
-    <div id={'faq'} className={'faq'}>
+    <div id="faq" className="faq basicPage">
       <div className="container">
-        <ul className={'minimenu'}>
+        <ul className="miniMenu">
           <li>
-            <Link href={'/'}>Вернуться на главную</Link>
+            <Link href="/">Вернуться на главную</Link>
           </li>
           <li>
-            <Link href={'/schedule'}>Расписание</Link>
+            <Link href="/schedule">Расписание</Link>
           </li>
         </ul>
-        <h1 className={'title'}>F.A.Q.</h1>
-        <div className={'questions-list'}>
+        <h1 className="title">F.A.Q.</h1>
+        <div className="questions-list">
           <div className="question">
             <h2>Как варить пельмени?</h2>
             <p>
@@ -49,7 +49,7 @@ function Faq() {
             </p>
           </div>
         </div>
-        <FaqIcon className={'illustration'} />
+        <FaqIcon className="illustration" />
       </div>
     </div>
   );

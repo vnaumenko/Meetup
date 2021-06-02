@@ -1,50 +1,9 @@
-.faq {
-  border-radius: $border-radius-lg * 2 $border-radius-lg * 2 0 0;
-  background-color: white;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-  margin-top: 6rem;
-  min-height: calc(100vh - #{$spacer} * 6);
-  .minimenu {
-    margin-top: -4rem;
-    position: absolute;
-  }
-  .container {
-    position: relative;
-  }
-  .title {
-    text-align: center;
-    padding-bottom: 4rem;
-    @include media-breakpoint-up(lg) {
-      text-align: left;
-    }
-  }
-  .questions-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    @include media-breakpoint-up(lg) {
-      align-items: start;
-    }
-    .question {
-      max-width: 500px;
-      margin-bottom: 2rem;
-      h2 {
-        font-weight: normal;
-
-      }
-    }
-  }
-  .illustration {
-    display: none;
-    @include media-breakpoint-up(lg) {
-      display: block;
-      position: absolute;
-      top: -10rem;
-      right: -10%;
-    }
-    @include media-breakpoint-up(xl) {
-      right: 0;
+.admin {
+  .table {
+    th {
+      text-transform: uppercase;
+      font-family: $headings-font-family;
+      font-size: .85rem;
     }
   }
 }
