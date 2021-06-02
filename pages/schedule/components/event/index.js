@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { format } from 'date-fns';
+import { ru } from 'date-fns/locale';
 import HardIllustration from '../../../../public/hard.svg';
 import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
@@ -50,6 +51,12 @@ function Event({ event }) {
     return format(eventDate, 'H:mm');
   };
 
+  const renderFullDate = () => {
+    const eventDate = new Date(event.datetime);
+    // 27 июня, среда в 16:30
+    return format(eventDate, 'd MMMM, EEEE в H:mm', { locale: ru });
+  };
+
   return (
     <>
       <div className="timetable-event" key={event.id}>
@@ -77,7 +84,7 @@ function Event({ event }) {
         <div className="title">
           Вы записываетесь на
           <h1>{event.label}</h1>
-          <time>27 июня, среда в 16:30</time>
+          <time>{renderFullDate()}</time>
         </div>
         <div className="form">
           <form onSubmit={submitForm}>
