@@ -47,10 +47,7 @@ function Event({ event }) {
 
   const renderTime = () => {
     const eventDate = new Date(event.datetime);
-    const formatDate = format(eventDate, 'H:mm');
-
-    console.log(eventDate);
-    return formatDate;
+    return format(eventDate, 'H:mm');
   };
 
   return (
