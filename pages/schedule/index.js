@@ -56,12 +56,10 @@ function Schedule(props) {
 
 export async function getStaticProps() {
   const eventer = await Eventer.getEventer();
-  const records = eventer.getRecords();
-
-  console.log(records);
+  const events = eventer.getRecords();
   return {
     props: {
-      events: records,
+      events,
     },
   };
 }
