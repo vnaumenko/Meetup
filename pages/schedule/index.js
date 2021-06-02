@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import ScheduleIcon from '../../public/schedule.svg';
+import ScheduleIcon from 'public/schedule.svg';
 import Event from './components/event';
 
 function Schedule() {
@@ -32,8 +32,9 @@ function Schedule() {
   const renderTimetable = () => {
     const renderEvents = () =>
       events.map((event) => {
+        const { id } = event;
         return (
-          <div className="col-12 col-lg-6">
+          <div className="col-12 col-lg-6" key={id}>
             <Event event={event} />
           </div>
         );

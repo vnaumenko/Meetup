@@ -19,6 +19,7 @@ function Event({ event }) {
   const submitForm = (e) => {
     e.preventDefault();
     setIsOpen(false);
+    // eslint-disable-next-line no-console
     console.log(form);
   };
 
@@ -34,7 +35,7 @@ function Event({ event }) {
           </div>
           <div className="desc">
             <p>{event.description}</p>
-            <button className={'btn btn-primary'} onClick={openModal}>
+            <button type={'button'} className={'btn btn-primary'} onClick={openModal}>
               Записаться
             </button>
           </div>
@@ -65,12 +66,10 @@ function Event({ event }) {
                 id="name"
                 value={form.name}
                 onChange={({ target }) => {
-                  updateForm((prevState) => {
-                    return {
-                      ...prevState,
-                      name: target.value,
-                    };
-                  });
+                  updateForm((prevState) => ({
+                    ...prevState,
+                    name: target.value,
+                  }));
                 }}
               />
             </div>
@@ -84,12 +83,10 @@ function Event({ event }) {
                 id="email"
                 value={form.email}
                 onChange={({ target }) => {
-                  updateForm((prevState) => {
-                    return {
-                      ...prevState,
-                      email: target.value,
-                    };
-                  });
+                  updateForm((prevState) => ({
+                    ...prevState,
+                    email: target.value,
+                  }));
                 }}
               />
             </div>
