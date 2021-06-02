@@ -27,11 +27,13 @@ function Event({ event }) {
 
   const submitForm = (e) => {
     const { name, email, skype } = form;
+    const { id: meetupID } = event;
     e.preventDefault();
     const formData = new FormData();
     formData.set('name', name);
     formData.set('email', email);
     formData.set('skype', skype);
+    formData.set('meetupID', meetupID);
     fetch('/api/register', { method: 'POST', body: formData }).then(() => {
       setIsOpen(false);
     });
