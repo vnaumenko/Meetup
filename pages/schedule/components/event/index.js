@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import { format } from 'date-fns';
 import HardIllustration from '../../../../public/hard.svg';
 import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
@@ -44,11 +45,19 @@ function Event({ event }) {
     return null;
   };
 
+  const renderTime = () => {
+    const eventDate = new Date(event.datetime);
+    const formatDate = format(eventDate, 'H:mm');
+
+    console.log(eventDate);
+    return formatDate;
+  };
+
   return (
     <>
       <div className="timetable-event" key={event.id}>
         <div className="header">
-          <p className="time">{event.type}</p>
+          <p className="time">{renderTime()}</p>
           <div className="person">
             <p className="name">{event.speaker}</p>
             <p className="department">{event.department}</p>
@@ -70,7 +79,7 @@ function Event({ event }) {
       >
         <div className="title">
           Вы записываетесь на
-          <h1>{event.title}</h1>
+          <h1>{event.label}</h1>
           <time>27 июня, среда в 16:30</time>
         </div>
         <div className="form">
@@ -87,7 +96,7 @@ function Event({ event }) {
                 onChange={onFieldChange}
               />
             </div>
-            <div className="mb-4">
+            <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Рабочая почта
               </label>
@@ -111,7 +120,7 @@ function Event({ event }) {
                 onChange={onFieldChange}
               />
             </div>
-            <button type="submit" className="btn btn-primary me-3">
+            <button type="submit" className="btn btn-primary me-3" disabled={isSubmitDisabled}>
               Записаться
             </button>
             <button type="submit" className="btn btn-link" onClick={closeModal}>

@@ -8,11 +8,14 @@ function Schedule(props) {
   const { events } = props;
   const renderTimetable = () => {
     const renderEvents = () =>
-      Object.values(events).map((event) => (
-        <div className="col-12 col-lg-6">
-          <Event event={event} />
-        </div>
-      ));
+      Object.values(events).map((event) => {
+        const { id } = event;
+        return (
+          <div className="col-12 col-lg-6" key={id}>
+            <Event event={event} />
+          </div>
+        );
+      });
 
     return (
       <div className="timetable">
@@ -60,7 +63,7 @@ export async function getStaticProps() {
       events: {
         1: {
           id: 1,
-          datetime: new Date(),
+          datetime: 1622636226801,
           label: 'как варить пельмени, Варенники, Макароны, Сапоги или САМЫЙ ЛУЧШИЙ ДОКЛАД',
           type: 'lifestyle',
           department: 'Отдел новых открытий',
@@ -68,7 +71,7 @@ export async function getStaticProps() {
         },
         2: {
           id: 2,
-          datetime: new Date(),
+          datetime: 162263600000,
           label: 'Как варить манты?',
           type: 'hard',
           department: 'Отдел новых открытий',

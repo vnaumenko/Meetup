@@ -38,12 +38,34 @@
       background-color: $info;
       padding: 2rem;
       border-radius: $border-radius-lg;
-      margin-bottom: 1rem;
-      .type {
-        text-transform: uppercase;
+      position: relative;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      .header {
+        margin-bottom: 1rem;
+        display: flex;
+        justify-content: space-between;
         font-family: $headings-font-family;
-        color: $primary;
-        margin-bottom: .25em;
+        text-transform: uppercase;
+        .time {
+          font-size: 1.25rem;
+          opacity: .5;
+          margin-bottom: 0;
+        }
+        .person {
+          text-align: right;
+          .name {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0;
+          }
+          .department {
+            font-size: 1rem;
+            opacity: .5;
+            margin-bottom: 0;
+          }
+        }
       }
       .title {
         text-align: left;
@@ -52,26 +74,17 @@
         font-weight: bold;
         padding-bottom: 0;
         font-family: $headings-font-family;
-        margin-bottom: .25em;
-      }
-      .name {
-        font-size: 1.25rem;
         margin-bottom: 1em;
+        max-width: 75%;
       }
-      .info {
-        display: flex;
-        flex-direction: row;
-        .photo {
-          flex: 0 0 100px;
-          max-width: 100px;
-          margin-right: 1rem;
-          img {
-            border-radius: 100px;
-          }
-        }
-        .desc {
-          flex: 0 1 100%;
-        }
+      button {
+        margin-top: auto;
+        align-self: flex-start;
+      }
+      svg {
+        position: absolute;
+        right: 0;
+        bottom: 0;
       }
     }
   }
