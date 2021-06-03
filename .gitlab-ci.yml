@@ -14,6 +14,7 @@ build :
     name: '"$CI_PROJECT_NAME"_$CI_PIPELINE_ID'
     when: on_success
     paths:
+    - "*"
     - ".next"
     expire_in: 1 day
 deploy :
@@ -23,5 +24,6 @@ deploy :
   tags:
     - meetup
   script:
-    - rm -rf /var/www/meetup/*  
+    - rm -rf /var/www/meetup/*
+    - cp -rp * /var/www/meetup/
     - cp -rp .next/* /var/www/meetup/
