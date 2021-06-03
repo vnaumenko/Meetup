@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import Modal from 'react-modal';
-import Event from './components/Event';
+import { Event } from './components/Event';
 
 function AdminEvents() {
   const [events, setEvents] = useState([]);

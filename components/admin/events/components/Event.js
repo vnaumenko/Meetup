@@ -5,7 +5,7 @@ import { ru } from 'date-fns/locale';
 import HardIllustration from '../../../../public/hard.svg';
 import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
-function Event({ event }) {
+export function Event({ event }) {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const [form, updateForm] = useState(() => {
@@ -98,6 +98,7 @@ function Event({ event }) {
           </div>
         </div>
         {renderIllustration()}
+        {renderIllustration()}
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -182,5 +183,3 @@ function Event({ event }) {
     </>
   );
 }
-
-export default Event;

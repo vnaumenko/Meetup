@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import Eventer from '../../lib/Eventer';
 import ScheduleIcon from '../../public/schedule.svg';
-import Event from './components/event';
+import Event from '../../components/event';
 import { useRouter } from 'next/router';
 
 function Schedule(props) {

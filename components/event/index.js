@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import HardIllustration from '../../../../public/hard.svg';
-import LifestyleIllustration from '../../../../public/lifestyle.svg';
+import HardIllustration from '../../public/hard.svg';
+import LifestyleIllustration from '../../public/lifestyle.svg';
 
 function Event({ event }) {
   const [modalIsOpen, setIsOpen] = useState(false);
