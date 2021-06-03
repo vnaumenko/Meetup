@@ -2,17 +2,9 @@
 @import "main/style";
 @import "schedule/style";
 @import "admin/style";
+@import "promo/style";
 
-.basicPage {
-  border-radius: $border-radius-lg * 2 $border-radius-lg * 2 0 0;
-  background-color: white;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-  margin-top: 6rem;
-  min-height: calc(100vh - #{$spacer} * 6);
-}
-
-.miniMenu {
+.minimenu {
   list-style-type: none;
   display: flex;
   flex-direction: row;
