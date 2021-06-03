@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classnames from 'classnames';
-import AdminEvents from './events';
-import AdminRecords from './records';
+import AdminEvents from '../../components/admin/events';
+import AdminRecords from '../../components/admin/records';
+import { useRouter } from 'next/router';
 
 function Admin() {
+  const router = useRouter();
   const [currentPage, setCurrentPage] = useState('records');
 
   const renderContent = () => {
@@ -11,6 +13,12 @@ function Admin() {
     if (currentPage === 'events') return <AdminEvents />;
     return null;
   };
+
+  useEffect(() => {
+    router.push('/promo');
+  }, []);
+
+  return null;
 
   return (
     <div

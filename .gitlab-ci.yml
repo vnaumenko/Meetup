@@ -1,0 +1,31 @@
+stages:
+    - build
+    - deploy
+build :
+  stage: build
+  only: 
+    - rc_test@LifeIT/Internal/meetup
+  tags:
+    - meetup
+  script:
+    - yarn install
+    - yarn build
+  artifacts:
+    name: '"$CI_PROJECT_NAME"_$CI_PIPELINE_ID'
+    when: on_success
+    paths:
+    - "*"
+    - ".next"
+    expire_in: 1 day
+deploy :
+  stage: deploy
+  only: 
+    - rc_test@LifeIT/Internal/meetup
+  tags:
+    - meetup
+  script:
+    - sudo systemctl stop meetup.service
+    - rm -rf /var/www/meetup/*
+    - cp -rp * /var/www/meetup/
+    - cp -rp .next /var/www/meetup/
+    - sudo systemctl start meetup.service

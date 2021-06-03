@@ -5,7 +5,7 @@ import { ru } from 'date-fns/locale';
 import HardIllustration from '../../../../public/hard.svg';
 import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
-function Event({ event }) {
+export function Event({ event }) {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const [form, updateForm] = useState(() => {
@@ -42,7 +42,7 @@ function Event({ event }) {
     e.preventDefault();
     const formData = new FormData();
     formData.set('theme', theme);
-    formData.set('date', date);
+    formData.set('datetime', date);
     formData.set('speaker', speaker);
     formData.set('department', department);
     formData.set('type', type);
@@ -97,6 +97,7 @@ function Event({ event }) {
             </button>
           </div>
         </div>
+        {renderIllustration()}
         {renderIllustration()}
       </div>
       <Modal
@@ -182,5 +183,3 @@ function Event({ event }) {
     </>
   );
 }
-
-export default Event;

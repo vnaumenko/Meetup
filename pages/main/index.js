@@ -1,18 +1,22 @@
 /* eslint-disable no-magic-numbers */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { useDrag, useMove } from 'react-use-gesture';
-import { animated, useSpring } from 'react-spring';
+import { animated, useSpring, config } from 'react-spring';
 import Men1 from '../../public/men1.svg';
 import Men2 from '../../public/men2.svg';
 import Men3 from '../../public/men3.svg';
 import PeopleBg from '../../public/people_bg.svg';
+import LogoCircle from '../../public/logo-circle.svg';
 
+import { useRouter } from 'next/router';
 const AnimatedMen1 = animated(Men1);
 const AnimatedMen2 = animated(Men2);
 const AnimatedMen3 = animated(Men3);
 
 function Main() {
+  const router = useRouter();
+
   const calc = (x, y) => [x - window.innerWidth / 50, y - window.innerHeight / 50];
   const trans1 = (x, y) => `translate3d(${x / 50}px,${y / 50}px,0)`;
   const trans2 = (x, y) => `translate3d(${x / 15 + 35}px,${y / 15 - 230}px,0)`;
@@ -29,7 +33,11 @@ function Main() {
   const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
 
   const bindDrag = useDrag(({ down, movement: [mx, my] }) => {
-    api.start({ x: down ? mx : 0, y: down ? my : 0 });
+    api.start({
+      x: down ? mx : 0,
+      y: down ? my : 0,
+      config: down ? config.default : { duration: 5000 },
+    });
   });
 
   return (
@@ -59,7 +67,23 @@ function Main() {
           </div>
           <div className="illustration">
             <AnimatedMen1 className="men1" style={{ transform: props.xy.interpolate(trans1) }} />
-            <p className="hiddenText">Hello</p>
+            <div className="hiddenText">
+              <LogoCircle
+                onClick={() => {
+                  const answer = prompt(
+                    'Время - деньги, так что отвечай скорее. Если одиннадцать плюс два равняются одному, чему равны девять плюс пять?'
+                  );
+                  if (answer === '2') {
+                    console.clear();
+                    console.log(
+                      '%c СЮРПРИЗ ',
+                      'color: white; background-color: #2274A5; font-size: 32px;',
+                      'секретное слово'
+                    );
+                  }
+                }}
+              />
+            </div>
             <AnimatedMen2 className="men2" {...bindDrag()} style={{ x, y }} />
             <AnimatedMen3 className="men3" style={{ transform: props.xy.interpolate(trans2) }} />
             <PeopleBg className="bg" />

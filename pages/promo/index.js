@@ -32,7 +32,7 @@ function Promo() {
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(300px) rotateY(${flipped ? 180 : 0}deg)`,
-    config: { mass: 5, tension: 500, friction: 80 },
+    config: { duration: 500 },
   });
 
   const [isLabelActive, setLabelActiveState] = useState(false);
@@ -53,6 +53,11 @@ function Promo() {
   }));
 
   useEffect(() => {
+    if (!global.window.test) {
+      global.window.test = () => {
+        set((state) => !state);
+      };
+    }
     setTimeout(() => {
       set((state) => !state);
       setTimeout(() => {
@@ -63,9 +68,17 @@ function Promo() {
             labelRotation: labelRotationProps.labelRotation.get() === 0 ? 180 : 0,
           });
         }, 3500);
-      }, 1000);
+      }, 1500);
     }, 1000);
   }, []);
+
+  // useEffect(() => {
+  //   if (process.browser) {
+  //     if (global.window.secret === 1) {
+  //       set((state) => !state);
+  //     }
+  //   }
+  // }, [global.window.secret]);
 
   const transLabel = (value) => `rotate(${value}deg)`;
 
@@ -78,6 +91,12 @@ function Promo() {
             style={{ opacity: opacity.to((o) => 1 - o), transform }}
           >
             <PromoFront />
+          </animated.div>
+          <animated.div
+            className="rotatingElement"
+            style={{ opacity: opacity.to((o) => 1 - o), transform }}
+          >
+            123
           </animated.div>
           <animated.div
             className={`rotatingElement rotatingElement-back`}
@@ -109,10 +128,17 @@ function Promo() {
           </animated.div>
         </div>
         <animated.div className="text" style={{ opacity: textOpacity }}>
+          <p>Расскажем всё 4 июня в 17:00</p>
+          <a
+            href="https://us05web.zoom.us/j/88280042584?pwd=SklKZHNCTS90eXQxVkE4cmdJMVQ3Zz09"
+            target="_blank"
+          >
+            Перейти на страницу конференции в ZOOM
+          </a>
           <p>
-            Успей стать <strong>лучше</strong>.
+            Идентификатор конференции: <strong>882 8004 2584</strong> Код доступа:{' '}
+            <strong>3ft6uQ</strong>
           </p>
-          <p>Движение начнётся уже в пятницу</p>
         </animated.div>
       </div>
     </div>
