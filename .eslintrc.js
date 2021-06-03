@@ -6,7 +6,7 @@ module.exports = {
     node: true,
     jest: true,
   },
-  extends: ['airbnb', 'prettier', 'prettier/react'],
+  extends: ['prettier', 'prettier/react'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -293,75 +293,6 @@ module.exports = {
     'template-curly-spacing': [2, 'never'],
     // В генераторах звёздочка допускается только после funciton
     'yield-star-spacing': [2, 'after'],
-
-    // IMPORT
-    // Разрешён только ES6 импорт файлов с расширением, указанных в настройках "import/resolver"
-    'import/no-unresolved': [0, { ignore: ['history'] }],
-    // Запрет на использование дефолтного импорта из файла, в котором нет дефолтного экспорта
-    'import/default': 2,
-    // Запрет на использованеи абсолютного пути в импортах
-    'import/no-absolute-path': 2,
-    // Запрет на использование синтаксиса Webpack в импортах
-    'import/no-webpack-loader-syntax': 2,
-    // Запрет на импорт в файле самого себя
-    'import/no-self-import': 2,
-    // Запрет на цикличный импорт (два файла импортируют друг друга)
-    'import/no-cycle': [2, { maxDepth: 1 }],
-    // Запрет на импорт с излишними навигациями из ./.. в пути импорта
-    'import/no-useless-path-segments': [2, { noUselessIndex: true }],
-    // Ошибки при повторном экспорте одинаковых имён или дефолтныъ экспортов
-    'import/export': 2,
-    // Запрет на импорт функций, которые помечены как @deprecated в JSDoc
-    'import/no-deprecated': 2,
-    // Запрет на импорт модулей, не указанных в dependecies package.json
-    'import/no-extraneous-dependencies': [
-      2,
-      {
-        devDependencies: true,
-        optionalDependencies: false,
-        peerDependencies: false,
-        bundledDependencies: false,
-      },
-    ],
-    // Запрет на использование let и var в экспортах
-    'import/no-mutable-exports': 2,
-    // Ошибка при наличии неиспользуемых модулей, помимо корневого файла и файлов тестов
-    'import/no-unused-modules': [
-      2,
-      {
-        unusedExports: true,
-        src: ['./public/*'],
-        ignoreExports: ['./pages/_app.js'],
-      },
-    ], // Запрет на использование синтаксиса require/module.export
-    'import/no-commonjs': 2,
-    // Запрет на использование синтаксиса define/require
-    'import/no-amd': 2,
-    // Запрет на импорт встроенных NodeJS модулей
-    'import/no-nodejs-modules': 2,
-    // Все импорты должны быть строго перед остальным кодом
-    'import/first': 2,
-    // Все экспорты должны быть строго после остального кода
-    'import/exports-last': 2,
-    // Запрет на использование namespaces (* as namespace)
-    'import/no-namespace': 2,
-    // Необходимость вводить расширение файла
-    'import/extensions': [2, 'never', { sass: 'always', scss: 'always', svg: 'always' }],
-    // Необходимость в одном пробеле после импорта
-    'import/newline-after-import': [2, { count: 1 }],
-    // Отключение необходимости default экспорта, если это один экспорт в модуле
-    'import/prefer-default-export': 0,
-    // Максимальное количество зависимостей в модуле
-    'import/max-dependencies': [2, { max: 50 }],
-    // Запрет на неиспользуемый импорт
-    'import/no-unassigned-import': [
-      2,
-      { allow: ['*.sass', '**/*.sass', '*.scss', '**/*.scss', 'core-js/*', 'view'] },
-    ],
-    // Запрет на export default
-    'import/no-default-export': 0,
-    // При наличии нескольких экспортов в модуле все они должны быть описаны в одном экспорте
-    'import/group-exports': 2,
 
     // REACT
     'react/boolean-prop-naming': [
