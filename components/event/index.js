@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
@@ -7,11 +7,24 @@ import LifestyleIllustration from '../../public/lifestyle.svg';
 
 function Event({ event }) {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [formSent, setFormSent] = useState(false);
+
   const [form, updateForm] = useState({
     name: '',
     email: '',
     skype: '',
   });
+
+  useEffect(() => {
+    if (formSent) {
+      console.clear();
+      console.log(
+        '%c СЮРПРИЗ ',
+        'color: white; background-color: #2274A5; font-size: 32px;',
+        'секретное слово'
+      );
+    }
+  }, [formSent]);
 
   const openModal = () => {
     setIsOpen(true);
@@ -37,6 +50,7 @@ function Event({ event }) {
     formData.set('meetupID', meetupID);
     fetch('/api/register', { method: 'POST', body: formData }).then(() => {
       setIsOpen(false);
+      setFormSent(true);
     });
   };
 
@@ -59,6 +73,25 @@ function Event({ event }) {
     return format(eventDate, 'd MMMM, EEEE в H:mm', { locale: ru });
   };
 
+  const renderButton = () => {
+    if (formSent)
+      return (
+        <>
+          Вы успешно записались,
+          <br />
+          не забудь заглянуть в консоль,
+          <br />
+          там подарок. 😉
+        </>
+      );
+
+    return (
+      <button type="button" className="btn btn-primary" onClick={openModal}>
+        Записаться
+      </button>
+    );
+  };
+
   return (
     <>
       <div className="timetable-event" key={event.id}>
@@ -70,9 +103,7 @@ function Event({ event }) {
           </div>
         </div>
         <p className="title">{event.label}</p>
-        <button type="button" className="btn btn-primary" onClick={openModal}>
-          Записаться
-        </button>
+        {renderButton()}
         {renderIllustration()}
       </div>
       <Modal

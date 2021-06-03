@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import FaqIcon from '../../public/faq.svg';
 
@@ -93,6 +94,7 @@ function Faq() {
               </ul>
             </p>
             <p className={'lead fw-bold'}>Ждем вас на LifeIT Meetups!</p>
+            {renderThanks()}
           </div>
         </div>
         <FaqIcon className="illustration" />
