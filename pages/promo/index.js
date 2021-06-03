@@ -110,7 +110,10 @@ function Promo() {
         </div>
         <animated.div className="text" style={{ opacity: textOpacity }}>
           <p>Расскажем всё 4 июня в 17:00</p>
-          <a href="https://us05web.zoom.us/j/88280042584?pwd=SklKZHNCTS90eXQxVkE4cmdJMVQ3Zz09">
+          <a
+            href="https://us05web.zoom.us/j/88280042584?pwd=SklKZHNCTS90eXQxVkE4cmdJMVQ3Zz09"
+            target="_blank"
+          >
             Перейти на страницу конференции в ZOOM
           </a>
           <p>
