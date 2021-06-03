@@ -24,6 +24,8 @@ deploy :
   tags:
     - meetup
   script:
+    - sudo systemctl stop meetup.service
     - rm -rf /var/www/meetup/*
     - cp -rp * /var/www/meetup/
     - cp -rp .next /var/www/meetup/
+    - sudo systemctl start meetup.service
