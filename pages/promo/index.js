@@ -32,7 +32,7 @@ function Promo() {
   const { transform, opacity } = useSpring({
     opacity: flipped ? 1 : 0,
     transform: `perspective(300px) rotateY(${flipped ? 180 : 0}deg)`,
-    config: { mass: 5, tension: 500, friction: 80 },
+    config: { duration: 500 },
   });
 
   const [isLabelActive, setLabelActiveState] = useState(false);
@@ -63,7 +63,7 @@ function Promo() {
             labelRotation: labelRotationProps.labelRotation.get() === 0 ? 180 : 0,
           });
         }, 3500);
-      }, 1000);
+      }, 1500);
     }, 1000);
   }, []);
 
@@ -109,10 +109,14 @@ function Promo() {
           </animated.div>
         </div>
         <animated.div className="text" style={{ opacity: textOpacity }}>
+          <p>Расскажем всё 4 июня в 17:00</p>
+          <a href="https://us05web.zoom.us/j/88280042584?pwd=SklKZHNCTS90eXQxVkE4cmdJMVQ3Zz09">
+            Перейти на страницу конференции в ZOOM
+          </a>
           <p>
-            Успей стать <strong>лучше</strong>.
+            Идентификатор конференции: <strong>882 8004 2584</strong> Код доступа:{' '}
+            <strong>3ft6uQ</strong>
           </p>
-          <p>Движение начнётся уже в пятницу</p>
         </animated.div>
       </div>
     </div>

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import Eventer from '../../lib/Eventer';
 import ScheduleIcon from '../../public/schedule.svg';
 import Event from './components/event';
+import { useRouter } from 'next/router';
 
 function Schedule(props) {
+  const router = useRouter();
   const { events } = props;
 
   const renderTimetable = () => {
@@ -59,29 +61,33 @@ function Schedule(props) {
     return <div className="timetable">{renderDays()}</div>;
   };
 
+  useEffect(() => {
+    router.push('/promo');
+  }, []);
+
   return (
     <div id="schedule" className="schedule basicPage">
-      <div className="container">
-        <ul className="miniMenu">
-          <li>
-            <Link href="/">Вернуться на главную</Link>
-          </li>
-          <li>
-            <Link href="/faq">FAQ</Link>
-          </li>
-        </ul>
-        <h1 className="title">Расписание</h1>
-        <p className="subtitle-text">
-          Товарищи! консультация с широким активом влечет за собой процесс внедрения и модернизации
-          существенных финансовых и административных условий. Не следует, однако забывать, что
-          дальнейшее развитие различных форм деятельности требуют от нас анализа позиций, занимаемых
-          участниками в отношении поставленных задач. Не следует, однако забывать, что сложившаяся
-          структура организации обеспечивает широкому кругу (специалистов) участие в формировании
-          дальнейших направлений развития.
-        </p>
-        {renderTimetable()}
-        <ScheduleIcon className="illustration" />
-      </div>
+      {/*<div className="container">*/}
+      {/*  <ul className="miniMenu">*/}
+      {/*    <li>*/}
+      {/*      <Link href="/">Вернуться на главную</Link>*/}
+      {/*    </li>*/}
+      {/*    <li>*/}
+      {/*      <Link href="/faq">FAQ</Link>*/}
+      {/*    </li>*/}
+      {/*  </ul>*/}
+      {/*  <h1 className="title">Расписание</h1>*/}
+      {/*  <p className="subtitle-text">*/}
+      {/*    Товарищи! консультация с широким активом влечет за собой процесс внедрения и модернизации*/}
+      {/*    существенных финансовых и административных условий. Не следует, однако забывать, что*/}
+      {/*    дальнейшее развитие различных форм деятельности требуют от нас анализа позиций, занимаемых*/}
+      {/*    участниками в отношении поставленных задач. Не следует, однако забывать, что сложившаяся*/}
+      {/*    структура организации обеспечивает широкому кругу (специалистов) участие в формировании*/}
+      {/*    дальнейших направлений развития.*/}
+      {/*  </p>*/}
+      {/*  {renderTimetable()}*/}
+      {/*  <ScheduleIcon className="illustration" />*/}
+      {/*</div>*/}
     </div>
   );
 }

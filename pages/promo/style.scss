@@ -69,11 +69,14 @@
   font-family: $headings-font-family;
   text-transform: uppercase;
   text-align: center;
-  font-size: 24px;
-  margin-top: 32px;
+  font-size: 16px;
+
+  a {
+    color: $little-boy-blue
+  }
 
   p:first-of-type {
-    font-size: 48px;
+    font-size: 32px;
     font-weight: 600;
   }
 }
