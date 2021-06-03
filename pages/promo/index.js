@@ -53,6 +53,11 @@ function Promo() {
   }));
 
   useEffect(() => {
+    if (!global.window.test) {
+      global.window.test = () => {
+        set((state) => !state);
+      };
+    }
     setTimeout(() => {
       set((state) => !state);
       setTimeout(() => {
@@ -67,6 +72,14 @@ function Promo() {
     }, 1000);
   }, []);
 
+  // useEffect(() => {
+  //   if (process.browser) {
+  //     if (global.window.secret === 1) {
+  //       set((state) => !state);
+  //     }
+  //   }
+  // }, [global.window.secret]);
+
   const transLabel = (value) => `rotate(${value}deg)`;
 
   return (
@@ -78,6 +91,12 @@ function Promo() {
             style={{ opacity: opacity.to((o) => 1 - o), transform }}
           >
             <PromoFront />
+          </animated.div>
+          <animated.div
+            className="rotatingElement"
+            style={{ opacity: opacity.to((o) => 1 - o), transform }}
+          >
+            123
           </animated.div>
           <animated.div
             className={`rotatingElement rotatingElement-back`}

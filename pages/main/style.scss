@@ -88,13 +88,23 @@
     }
     .hiddenText {
       position: absolute;
-      bottom: 50px;
-      left: 65%;
+      bottom: -20px;
+      left: 55%;
       z-index: 1;
       visibility: hidden;
       text-transform: uppercase;
       @include media-breakpoint-up(xl) {
         visibility: visible;
+      }
+
+      svg {
+        will-change: transform;
+        transition: transform .3s ease-out;
+        transform: scale(0.2);
+        cursor: pointer;
+        &:hover {
+          transform: scale(0.5);
+        }
       }
     }
     .men2 {
@@ -121,6 +131,7 @@
       top: -40px;
       left: 180px;
       z-index: 1;
+      pointer-events: none;
       @include media-breakpoint-up(md) {
         top: -40px;
         left: 340px;

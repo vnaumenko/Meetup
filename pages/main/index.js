@@ -1,14 +1,15 @@
 /* eslint-disable no-magic-numbers */
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import {useDrag, useMove} from 'react-use-gesture';
-import {animated, useSpring} from 'react-spring';
+import { useDrag, useMove } from 'react-use-gesture';
+import { animated, useSpring, config } from 'react-spring';
 import Men1 from '../../public/men1.svg';
 import Men2 from '../../public/men2.svg';
 import Men3 from '../../public/men3.svg';
 import PeopleBg from '../../public/people_bg.svg';
-import {useRouter} from 'next/router';
+import LogoCircle from '../../public/logo-circle.svg';
 
+import { useRouter } from 'next/router';
 const AnimatedMen1 = animated(Men1);
 const AnimatedMen2 = animated(Men2);
 const AnimatedMen3 = animated(Men3);
@@ -21,40 +22,38 @@ function Main() {
   const trans2 = (x, y) => `translate3d(${x / 15 + 35}px,${y / 15 - 230}px,0)`;
   const [props, set] = useSpring(() => ({
     xy: [0, 0],
-    config: {mass: 10, tension: 550, friction: 140},
+    config: { mass: 10, tension: 550, friction: 140 },
   }));
 
-  const bind = useMove(({xy}) => {
+  const bind = useMove(({ xy }) => {
     const [x, y] = xy;
-    set({xy: calc(x, y)});
+    set({ xy: calc(x, y) });
   });
 
-  const [{x, y}, api] = useSpring(() => ({x: 0, y: 0}));
+  const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
 
-  const bindDrag = useDrag(({down, movement: [mx, my]}) => {
-    api.start({x: down ? mx : 0, y: down ? my : 0});
+  const bindDrag = useDrag(({ down, movement: [mx, my] }) => {
+    api.start({
+      x: down ? mx : 0,
+      y: down ? my : 0,
+      config: down ? config.default : { duration: 5000 },
+    });
   });
-
-  useEffect(() => {
-    router.push('/promo');
-  }, []);
-
-  return null;
 
   return (
     <div id="main" {...bind()}>
       <div className="container">
         <section className="main">
           <div className="lead">
-            <img src="lifeit_logo.png" className="logo" alt="LIFE IT"/>
+            <img src="lifeit_logo.png" className="logo" alt="LIFE IT" />
             <h1>
               LIFEIT Meetups
-              <br/>
+              <br />
               <span>#1 летний</span>
             </h1>
             <p>
               Две недели концентрированного
-              <br/>
+              <br />
               знания, идей и общения с коллегами
             </p>
             <div className="actions">
@@ -67,11 +66,27 @@ function Main() {
             </div>
           </div>
           <div className="illustration">
-            <AnimatedMen1 className="men1" style={{transform: props.xy.interpolate(trans1)}}/>
-            <p className="hiddenText">Hello</p>
-            <AnimatedMen2 className="men2" {...bindDrag()} style={{x, y}}/>
-            <AnimatedMen3 className="men3" style={{transform: props.xy.interpolate(trans2)}}/>
-            <PeopleBg className="bg"/>
+            <AnimatedMen1 className="men1" style={{ transform: props.xy.interpolate(trans1) }} />
+            <div className="hiddenText">
+              <LogoCircle
+                onClick={() => {
+                  const answer = prompt(
+                    'Время - деньги, так что отвечай скорее. Если одиннадцать плюс два равняются одному, чему равны девять плюс пять?'
+                  );
+                  if (answer === '2') {
+                    console.clear();
+                    console.log(
+                      '%c СЮРПРИЗ ',
+                      'color: white; background-color: #2274A5; font-size: 32px;',
+                      'секретное слово'
+                    );
+                  }
+                }}
+              />
+            </div>
+            <AnimatedMen2 className="men2" {...bindDrag()} style={{ x, y }} />
+            <AnimatedMen3 className="men3" style={{ transform: props.xy.interpolate(trans2) }} />
+            <PeopleBg className="bg" />
           </div>
         </section>
         <section className="counters">
@@ -106,9 +121,9 @@ function Main() {
             </div>
             <div className="col-12 col-lg-4">
               <p className="sign">
-                сделано <br/>
-                коллегами <br/>
-                для <br/>
+                сделано <br />
+                коллегами <br />
+                для <br />
                 коллег
               </p>
             </div>

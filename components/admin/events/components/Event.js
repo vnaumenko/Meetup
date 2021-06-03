@@ -42,7 +42,7 @@ export function Event({ event }) {
     e.preventDefault();
     const formData = new FormData();
     formData.set('theme', theme);
-    formData.set('date', date);
+    formData.set('datetime', date);
     formData.set('speaker', speaker);
     formData.set('department', department);
     formData.set('type', type);

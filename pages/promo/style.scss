@@ -162,17 +162,6 @@
         left: -40px;
       }
     }
-    .hiddenText {
-      position: absolute;
-      bottom: 50px;
-      left: 65%;
-      z-index: 1;
-      visibility: hidden;
-      text-transform: uppercase;
-      @include media-breakpoint-up(xl) {
-        visibility: visible;
-      }
-    }
     .men2 {
       position: absolute;
       left: 40px;
