@@ -18,6 +18,8 @@ function Admin() {
     router.push('/promo');
   }, []);
 
+  return null;
+
   return (
     <div
       id="admin"
@@ -26,21 +28,21 @@ function Admin() {
         'admin-events': currentPage === 'events',
       })}
     >
-      {/*<div className="container">*/}
-      {/*  <ul className="miniMenu">*/}
-      {/*    <li>*/}
-      {/*      <a href="#" onClick={() => setCurrentPage('records')}>*/}
-      {/*        Участники*/}
-      {/*      </a>*/}
-      {/*    </li>*/}
-      {/*    <li>*/}
-      {/*      <a href="#" onClick={() => setCurrentPage('events')}>*/}
-      {/*        События*/}
-      {/*      </a>*/}
-      {/*    </li>*/}
-      {/*  </ul>*/}
-      {/*  {renderContent()}*/}
-      {/*</div>*/}
+      <div className="container">
+        <ul className="miniMenu">
+          <li>
+            <a href="#" onClick={() => setCurrentPage('records')}>
+              Участники
+            </a>
+          </li>
+          <li>
+            <a href="#" onClick={() => setCurrentPage('events')}>
+              События
+            </a>
+          </li>
+        </ul>
+        {renderContent()}
+      </div>
     </div>
   );
 }

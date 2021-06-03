@@ -22,6 +22,9 @@
     }
     .question {
       max-width: 500px;
+      @include media-breakpoint-up(lg) {
+        max-width: 50%;
+      }
       margin-bottom: 2rem;
       h2 {
         font-weight: normal;
