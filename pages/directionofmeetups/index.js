@@ -14,11 +14,11 @@ function Admin() {
     return null;
   };
 
-  useEffect(() => {
-    router.push('/promo');
-  }, []);
+  // useEffect(() => {
+  //   router.push('/promo');
+  // }, []);
 
-  return null;
+  // return null;
 
   return (
     <div

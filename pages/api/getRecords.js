@@ -11,6 +11,7 @@ export default async (req, res) => {
   const extendedRecords = {};
   Object.keys(records).forEach((recordKey) => {
     const { meetupID, ...restRecord } = records[recordKey];
+    console.log(events, meetupID);
     const {
       datetime: meetupDatetime,
       speaker: meetupSpeaker,

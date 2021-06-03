@@ -6,6 +6,7 @@ import HardIllustration from '../../../../public/hard.svg';
 import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
 export function Event({ event }) {
+  console.log(event);
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const [form, updateForm] = useState(() => {

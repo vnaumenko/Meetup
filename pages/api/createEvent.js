@@ -11,16 +11,10 @@ export default async (req, res) => {
     });
   });
 
-  const { email: recordEmail, name: recordName, skype: recordSkype, meetupID } = fields;
-  const record = {
-    isHandled: false,
-    recordDatetime: new Date().getTime(),
-    recordEmail,
-    recordName,
-    recordSkype,
-  };
-  const recorder = await Recorder.getRecorder();
-  await recorder.addRecord(record);
+  const { datetime, ...restFields } = fields;
+
+  const eventer = await Eventer.getEventer();
+  await eventer.createEvent({ ...restFields, datetime: parseInt(datetime) });
 
   res.status(200).json({ status: 'ok' });
 };

@@ -18,6 +18,7 @@ export default async (req, res) => {
     recordEmail,
     recordName,
     recordSkype,
+    meetupID,
   };
   const recorder = await Recorder.getRecorder();
   await recorder.addRecord(record);

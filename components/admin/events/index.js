@@ -44,7 +44,7 @@ function AdminEvents() {
     e.preventDefault();
     const formData = new FormData();
     formData.set('theme', theme);
-    formData.set('date', date);
+    formData.set('datetime', new Date(date).getTime());
     formData.set('speaker', speaker);
     formData.set('department', department);
     formData.set('type', type);
