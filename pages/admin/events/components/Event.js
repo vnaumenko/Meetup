@@ -7,10 +7,21 @@ import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
 function Event({ event }) {
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [form, updateForm] = useState({
-    name: '',
-    email: '',
-    skype: '',
+
+  const [form, updateForm] = useState(() => {
+    const isoStringDate = new Date(event.datetime).toISOString();
+    const dateStringForDateInput = isoStringDate.substring(
+      0,
+      ((isoStringDate.indexOf('T') | 0) + 6) | 0
+    );
+
+    return {
+      theme: event.label,
+      date: dateStringForDateInput,
+      speaker: event.speaker,
+      department: event.department,
+      type: event.type,
+    };
   });
 
   const openModal = () => {
@@ -27,13 +38,15 @@ function Event({ event }) {
   };
 
   const submitForm = (e) => {
-    const { name, email, skype } = form;
+    const { theme, date, speaker, department, type } = form;
     e.preventDefault();
     const formData = new FormData();
-    formData.set('name', name);
-    formData.set('email', email);
-    formData.set('skype', skype);
-    fetch('/api/register', { method: 'POST', body: formData }).then(() => {
+    formData.set('theme', theme);
+    formData.set('date', date);
+    formData.set('speaker', speaker);
+    formData.set('department', department);
+    formData.set('type', type);
+    fetch('/api/editEvent', { method: 'POST', body: formData }).then(() => {
       setIsOpen(false);
     });
   };
@@ -73,7 +86,13 @@ function Event({ event }) {
             <button type="button" className="btn btn-primary btn-sm me-3" onClick={openModal}>
               Редактировать
             </button>
-            <button type="button" className="btn btn-danger btn-sm" onClick={openModal}>
+            <button
+              type="button"
+              className="btn btn-danger btn-sm"
+              onClick={() => {
+                console.log('удалил');
+              }}
+            >
               Удалить
             </button>
           </div>
@@ -83,58 +102,78 @@ function Event({ event }) {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        contentLabel="Example Modal"
         className="modal"
         overlayClassName="modal-overlay"
         closeTimeoutMS={300}
       >
         <div className="title">
-          Вы записываетесь на
+          Вы редактируете
           <h1>{event.label}</h1>
-          <time>{renderFullDate()}</time>
         </div>
         <div className="form">
           <form onSubmit={submitForm}>
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">
-                Имя
+              <label htmlFor="theme" className="form-label">
+                Тема
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="name"
-                value={form.name}
+                id="theme"
+                value={form.theme}
                 onChange={onFieldChange}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Рабочая почта
+              <label htmlFor="date" className="form-label">
+                Дата
               </label>
               <input
-                type="email"
+                type="datetime-local"
                 className="form-control"
-                id="email"
-                value={form.email}
+                id="date"
+                value={form.date}
                 onChange={onFieldChange}
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="skype" className="form-label">
-                Skype
+              <label htmlFor="speaker" className="form-label">
+                Спикер
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="skype"
-                value={form.skype}
+                id="speaker"
+                value={form.speaker}
                 onChange={onFieldChange}
               />
             </div>
+            <div className="mb-4">
+              <label htmlFor="department" className="form-label">
+                Отдел
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="department"
+                value={form.department}
+                onChange={onFieldChange}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="type" className="form-label">
+                Отдел
+              </label>
+              <select className="form-select" id="type" value={form.type} onChange={onFieldChange}>
+                <option selected value="" disabled hidden />
+                <option value="lifestyle">Lifestyle</option>
+                <option value="hard">Hard</option>
+              </select>
+            </div>
             <button type="submit" className="btn btn-primary me-3" disabled={isSubmitDisabled}>
-              Записаться
+              Сохранить
             </button>
-            <button type="submit" className="btn btn-link" onClick={closeModal}>
+            <button type="button" className="btn btn-link" onClick={closeModal}>
               Отмена
             </button>
           </form>

@@ -58,6 +58,7 @@ h1,h2,h3,h4,h5,h6 {
   height: auto;
   border-radius: 30px;
   padding: 32px;
+  z-index: 9999;
   overflow: hidden;
   background-color: $info;
   left: 50%;
@@ -70,6 +71,7 @@ h1,h2,h3,h4,h5,h6 {
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,.5);
+    z-index: 9999;
   }
   .title {
     color: $danger;

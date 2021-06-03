@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import Modal from 'react-modal';
 import Event from './components/Event';
 
 function AdminEvents() {
   const [events, setEvents] = useState([]);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     fetch('/api/getEvents').then(async (res) => {
@@ -12,6 +14,46 @@ function AdminEvents() {
       setEvents(Object.values(backendEvents));
     });
   }, []);
+
+  const initialFormValues = {
+    theme: '',
+    date: '',
+    speaker: '',
+    department: '',
+    type: '',
+  };
+
+  const [form, updateForm] = useState(initialFormValues);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    updateForm(initialFormValues);
+    setIsOpen(false);
+  };
+
+  const onFieldChange = ({ target }) => {
+    const { id, value } = target;
+    updateForm((prevState) => ({ ...prevState, [id]: value }));
+  };
+
+  const submitForm = (e) => {
+    const { theme, date, speaker, department, type } = form;
+    e.preventDefault();
+    const formData = new FormData();
+    formData.set('theme', theme);
+    formData.set('date', date);
+    formData.set('speaker', speaker);
+    formData.set('department', department);
+    formData.set('type', type);
+    fetch('/api/createEvent', { method: 'POST', body: formData }).then(() => {
+      setIsOpen(false);
+    });
+  };
+
+  const isSubmitDisabled = Object.values(form).some((value) => !value);
 
   const renderTimetable = () => {
     if (events.length === 0) return null;
@@ -69,9 +111,90 @@ function AdminEvents() {
     <>
       <h1 className="title mb-5">
         События
-        <button className="btn btn-primary">Новый митап</button>
+        <button type="button" className="btn btn-primary" onClick={openModal}>
+          Новый митап
+        </button>
       </h1>
       {renderTimetable()}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        className="modal"
+        overlayClassName="modal-overlay"
+        closeTimeoutMS={300}
+      >
+        <div className="title">
+          <h1>Новый митап</h1>
+        </div>
+        <div className="form">
+          <form onSubmit={submitForm}>
+            <div className="mb-3">
+              <label htmlFor="theme" className="form-label">
+                Тема
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="theme"
+                value={form.theme}
+                onChange={onFieldChange}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="date" className="form-label">
+                Дата
+              </label>
+              <input
+                type="datetime-local"
+                className="form-control"
+                id="date"
+                value={form.date}
+                onChange={onFieldChange}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="speaker" className="form-label">
+                Спикер
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="speaker"
+                value={form.speaker}
+                onChange={onFieldChange}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="department" className="form-label">
+                Отдел
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="department"
+                value={form.department}
+                onChange={onFieldChange}
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="type" className="form-label">
+                Отдел
+              </label>
+              <select className="form-select" id="type" value={form.type} onChange={onFieldChange}>
+                <option selected value="" disabled hidden />
+                <option>Lifestyle</option>
+                <option>Hard</option>
+              </select>
+            </div>
+            <button type="submit" className="btn btn-primary me-3" disabled={isSubmitDisabled}>
+              Добавить
+            </button>
+            <button type="button" className="btn btn-link" onClick={closeModal}>
+              Отмена
+            </button>
+          </form>
+        </div>
+      </Modal>
     </>
   );
 }
