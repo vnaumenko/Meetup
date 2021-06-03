@@ -5,7 +5,7 @@
   padding-bottom: 6rem;
   margin-top: 6rem;
   min-height: calc(100vh - 6rem);
-  .minimenu {
+  .miniMenu {
     margin-top: -4rem;
     position: absolute;
   }
@@ -76,6 +76,7 @@
         font-family: $headings-font-family;
         margin-bottom: 1em;
         max-width: 75%;
+        line-height: 2rem;
       }
       button {
         margin-top: auto;

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-export const Records = () => {
+function AdminRecords() {
   const [toggledRecords, setToggledRecords] = useState(0);
   const [records, setRecords] = useState([]);
 
@@ -56,20 +56,25 @@ export const Records = () => {
     });
 
   return (
-    <table className="table table-hover">
-      <thead className="table-dark">
-        <tr>
-          <th scope="col">Дата записи</th>
-          <th scope="col">Слушатель</th>
-          <th scope="col">Скайп</th>
-          <th scope="col">Почта</th>
-          <th scope="col">Название митапа</th>
-          <th scope="col">Спикер</th>
-          <th scope="col">Дата митапа</th>
-          <th scope="col">Галка</th>
-        </tr>
-      </thead>
-      <tbody>{renderRecords()}</tbody>
-    </table>
+    <>
+      <h1 className="title mb-5">Участники</h1>
+      <table className="table table-hover">
+        <thead className="table-dark">
+          <tr>
+            <th scope="col">Дата записи</th>
+            <th scope="col">Слушатель</th>
+            <th scope="col">Скайп</th>
+            <th scope="col">Почта</th>
+            <th scope="col">Название митапа</th>
+            <th scope="col">Спикер</th>
+            <th scope="col">Дата митапа</th>
+            <th scope="col">Галка</th>
+          </tr>
+        </thead>
+        <tbody>{renderRecords()}</tbody>
+      </table>
+    </>
   );
-};
+}
+
+export default AdminRecords;

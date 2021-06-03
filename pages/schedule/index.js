@@ -8,6 +8,7 @@ import Event from './components/event';
 
 function Schedule(props) {
   const { events } = props;
+
   const renderTimetable = () => {
     const dateSet = new Map();
 
@@ -87,7 +88,7 @@ function Schedule(props) {
 
 export async function getStaticProps() {
   const eventer = await Eventer.getEventer();
-  const events = eventer.getRecords();
+  const events = eventer.getEvents();
   return {
     props: {
       events,

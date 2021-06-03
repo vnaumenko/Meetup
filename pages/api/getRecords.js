@@ -6,7 +6,7 @@ export default async (req, res) => {
   const records = recorder.getRecords();
 
   const eventer = await Eventer.getEventer();
-  const events = eventer.getRecords();
+  const events = eventer.getEvents();
 
   const extendedRecords = {};
   Object.keys(records).forEach((recordKey) => {
