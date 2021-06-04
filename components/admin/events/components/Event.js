@@ -5,8 +5,7 @@ import { ru } from 'date-fns/locale';
 import HardIllustration from '../../../../public/hard.svg';
 import LifestyleIllustration from '../../../../public/lifestyle.svg';
 
-export function Event({ event }) {
-  console.log(event);
+export function Event({ event, onEventChanged }) {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const [form, updateForm] = useState(() => {
@@ -33,6 +32,14 @@ export function Event({ event }) {
     setIsOpen(false);
   };
 
+  const deleteEvent = (id) => {
+    const formData = new FormData();
+    formData.set('id', id);
+    fetch('/api/toggleEventStatus', { method: 'POST', body: formData }).then(() => {
+      onEventChanged();
+    });
+  };
+
   const onFieldChange = ({ target }) => {
     const { id, value } = target;
     updateForm((prevState) => ({ ...prevState, [id]: value }));
@@ -42,13 +49,15 @@ export function Event({ event }) {
     const { theme, date, speaker, department, type } = form;
     e.preventDefault();
     const formData = new FormData();
-    formData.set('theme', theme);
-    formData.set('datetime', date);
+    formData.set('id', event.id);
+    formData.set('label', theme);
+    formData.set('datetime', new Date(date).getTime().toString());
     formData.set('speaker', speaker);
     formData.set('department', department);
     formData.set('type', type);
-    fetch('/api/editEvent', { method: 'POST', body: formData }).then(() => {
+    fetch('/api/editEvent', { method: 'PUT', body: formData }).then(() => {
       setIsOpen(false);
+      onEventChanged();
     });
   };
 
@@ -73,7 +82,7 @@ export function Event({ event }) {
 
   return (
     <>
-      <div className="timetable-event" key={event.id}>
+      <div className="timetable-event" key={event.id} style={{ opacity: event.isActive ? 1 : 0.3 }}>
         <div className="event-content">
           <div className="header">
             <p className="time">{renderTime()}</p>
@@ -91,10 +100,10 @@ export function Event({ event }) {
               type="button"
               className="btn btn-danger btn-sm"
               onClick={() => {
-                console.log('удалил');
+                deleteEvent(event.id);
               }}
             >
-              Удалить
+              {event.isActive ? 'Удалить' : 'Восстановить'}
             </button>
           </div>
         </div>
