@@ -11,10 +11,10 @@ export default async (req, res) => {
     });
   });
 
-  const { datetime, ...restFields } = fields;
+  const { id } = fields;
 
   const eventer = await Eventer.getEventer();
-  await eventer.createEvent({ ...restFields, datetime: parseInt(datetime) });
+  await eventer.toggleEventStatus(id);
 
   res.status(200).json({ status: 'ok' });
 };

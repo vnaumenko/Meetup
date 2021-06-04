@@ -8,11 +8,15 @@ function AdminEvents() {
   const [events, setEvents] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    fetch('/api/getEvents').then(async (res) => {
+  const fetchEvents = () => {
+    fetch('/api/getAllEvents').then(async (res) => {
       const { events: backendEvents } = await res.json();
       setEvents(Object.values(backendEvents));
     });
+  };
+
+  useEffect(() => {
+    fetchEvents();
   }, []);
 
   const initialFormValues = {
@@ -43,12 +47,13 @@ function AdminEvents() {
     const { theme, date, speaker, department, type } = form;
     e.preventDefault();
     const formData = new FormData();
-    formData.set('theme', theme);
-    formData.set('date', date);
+    formData.set('label', theme);
+    formData.set('datetime', new Date(date).getTime().toString());
     formData.set('speaker', speaker);
     formData.set('department', department);
     formData.set('type', type);
     fetch('/api/createEvent', { method: 'POST', body: formData }).then(() => {
+      fetchEvents();
       setIsOpen(false);
     });
   };
@@ -98,7 +103,7 @@ function AdminEvents() {
               const { id } = event;
               return (
                 <div className="col-12 col-lg-6 mb-4" key={id}>
-                  <Event event={event} key={id} />
+                  <Event event={event} onEventChanged={fetchEvents} />
                 </div>
               );
             })
@@ -130,7 +135,7 @@ function AdminEvents() {
           <form onSubmit={submitForm}>
             <div className="mb-3">
               <label htmlFor="theme" className="form-label">
-                Тема
+                Тема доклада
               </label>
               <input
                 type="text"
@@ -178,12 +183,12 @@ function AdminEvents() {
             </div>
             <div className="mb-4">
               <label htmlFor="type" className="form-label">
-                Отдел
+                Тип доклада
               </label>
               <select className="form-select" id="type" value={form.type} onChange={onFieldChange}>
                 <option selected value="" disabled hidden />
-                <option>Lifestyle</option>
-                <option>Hard</option>
+                <option value="lifestyle">Lifestyle</option>
+                <option value="hard">Hard</option>
               </select>
             </div>
             <button type="submit" className="btn btn-primary me-3" disabled={isSubmitDisabled}>

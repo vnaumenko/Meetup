@@ -11,18 +11,24 @@ export default async (req, res) => {
   const extendedRecords = {};
   Object.keys(records).forEach((recordKey) => {
     const { meetupID, ...restRecord } = records[recordKey];
-    const {
-      datetime: meetupDatetime,
-      speaker: meetupSpeaker,
-      label: meetupLabel,
-    } = events[meetupID];
 
-    extendedRecords[recordKey] = {
-      ...restRecord,
-      meetupDatetime,
-      meetupSpeaker,
-      meetupLabel,
-    };
+    const eventInfo = events[meetupID];
+    if (eventInfo !== undefined) {
+      const {
+        datetime: meetupDatetime,
+        speaker: meetupSpeaker,
+        label: meetupLabel,
+        isActive: meetupActiveStatus,
+      } = events[meetupID];
+
+      extendedRecords[recordKey] = {
+        ...restRecord,
+        meetupDatetime,
+        meetupSpeaker,
+        meetupLabel,
+        meetupActiveStatus,
+      };
+    }
   });
 
   res.status(200).json({

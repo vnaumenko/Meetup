@@ -1,22 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import classes from './style.module.scss';
 
 function AdminRecords() {
-  const [toggledRecords, setToggledRecords] = useState(0);
   const [records, setRecords] = useState([]);
 
-  useEffect(() => {
+  const fetchRecords = () => {
     fetch('/api/getRecords').then(async (res) => {
       const { records: backendRecords } = await res.json();
       setRecords(backendRecords);
     });
-  }, [toggledRecords]);
+  };
+
+  useEffect(() => {
+    fetchRecords();
+  }, []);
 
   const onButtonClick = (id) => {
     const formData = new FormData();
     formData.set('recordID', id);
     fetch('/api/toggleRecord', { method: 'POST', body: formData }).then(() => {
-      setToggledRecords((prevState) => prevState + 1);
+      fetchRecords();
     });
+  };
+
+  const copyContent = ({ target }) => {
+    const tempInput = document.createElement('input');
+    document.body.appendChild(tempInput);
+    tempInput.value = target.textContent;
+    tempInput.select();
+    document.execCommand('copy', false);
+    tempInput.remove();
   };
 
   const renderRecords = () =>
@@ -31,24 +44,50 @@ function AdminRecords() {
         meetupDatetime,
         meetupSpeaker,
         meetupLabel,
+        meetupActiveStatus,
       } = record;
+
+      const rowClass = meetupActiveStatus ? 'table-light' : 'table-danger';
+
       return (
-        <tr key={id}>
-          <th scope="row">{new Date(recordDatetime).toLocaleDateString()}</th>
-          <td>{recordName}</td>
-          <td>{recordSkype}</td>
-          <td>{recordEmail}</td>
-          <td>{meetupLabel}</td>
-          <td>{meetupSpeaker}</td>
-          <td>{new Date(meetupDatetime).toLocaleDateString()}</td>
+        <tr
+          key={id}
+          className={rowClass}
+          style={{ opacity: isHandled ? 0.3 : 1, verticalAlign: 'middle', color: 'black' }}
+        >
+          <th scope="row" className={classes.cell} onClick={copyContent}>
+            {new Date(recordDatetime).toLocaleDateString()}
+          </th>
+          <td className={classes.cell} onClick={copyContent}>
+            {recordName}
+          </td>
+          <td className={classes.cell} onClick={copyContent}>
+            {recordSkype}
+          </td>
+          <td className={classes.cell} onClick={copyContent}>
+            {recordEmail}
+          </td>
+          <td className={classes.cell} onClick={copyContent}>
+            {meetupLabel}
+          </td>
+          <td className={classes.cell} onClick={copyContent}>
+            {meetupSpeaker}
+          </td>
+          <td className={classes.cell} onClick={copyContent}>
+            {new Date(meetupDatetime).toLocaleDateString()}
+          </td>
+          <td className={classes.cell} onClick={copyContent}>
+            {meetupActiveStatus ? 'Митап активен' : 'Митап удалён'}
+          </td>
           <td>
             <button
               type="button"
+              className="btn btn-light"
               onClick={() => {
                 onButtonClick(id);
               }}
             >
-              123
+              {isHandled ? '❌' : '✔️'}
             </button>
           </td>
         </tr>
@@ -69,7 +108,8 @@ function AdminRecords() {
               <th scope="col">Название митапа</th>
               <th scope="col">Спикер</th>
               <th scope="col">Дата митапа</th>
-              <th scope="col">Галка</th>
+              <th scope="col">Статус митапа</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>{renderRecords()}</tbody>
