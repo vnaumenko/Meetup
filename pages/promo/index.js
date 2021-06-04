@@ -7,12 +7,15 @@ import PromoBackCircle3 from '../../public/promo-back_circle3.svg';
 import PromoBackCircleHole from '../../public/promo-back_circleHole.svg';
 import PromoBackLabel from '../../public/promo-back_label.svg';
 import { useMove } from 'react-use-gesture';
+import { useRouter } from 'next/router';
 
 const AnimatedCircle2 = animated(PromoBackCircle2);
 const AnimatedCircle3 = animated(PromoBackCircle3);
 const AnimatedLabel = animated(PromoBackLabel);
 
 function Promo() {
+  const router = useRouter();
+
   const calc = (x, y) => [x - window.innerWidth / 50, y - window.innerHeight / 50];
   const trans1 = (x, y) => `translate3d(${x / 50}px,${y / 50}px,0)`;
   const trans2 = (x, y) => `translate3d(${x / 10 + 3}px,${y / 15 - 2}px,0)`;
@@ -70,15 +73,39 @@ function Promo() {
     }, 1000);
   }, []);
 
-  // useEffect(() => {
-  //   if (process.browser) {
-  //     if (global.window.secret === 1) {
-  //       set((state) => !state);
-  //     }
-  //   }
-  // }, [global.window.secret]);
+  const [eventProps, eventScaleAPI] = useSpring(() => ({
+    scale: 1,
+    opacity: 0,
+    config: { mass: 50, tension: 300, friction: 170 },
+  }));
+
+  const onCirclesClick = () => {
+    if (process.browser) {
+      if (global.window && global.window.i_am_knowledge_keeper === true) {
+        eventScaleAPI.start({
+          opacity: 1,
+          onRest() {
+            eventScaleAPI.start({
+              scale: 15,
+              onRest() {
+                router.push('/whatnext');
+              },
+            });
+          },
+        });
+      } else {
+        console.clear();
+        console.log(
+          '%c НЕВЕРНО! ',
+          'color: white; background-color: #2274A5; font-size: 32px;',
+          'Может быть, ты не хранитель?'
+        );
+      }
+    }
+  };
 
   const transLabel = (value) => `rotate(${value}deg)`;
+  const transEventCircle = (scaleValue) => `scale(${scaleValue})`;
 
   return (
     <div id={'promo'} {...bindParallax()}>
@@ -91,12 +118,6 @@ function Promo() {
             <PromoFront />
           </animated.div>
           <animated.div
-            className="rotatingElement"
-            style={{ opacity: opacity.to((o) => 1 - o), transform }}
-          >
-            123
-          </animated.div>
-          <animated.div
             className={`rotatingElement rotatingElement-back`}
             style={{
               opacity,
@@ -104,7 +125,14 @@ function Promo() {
               rotateX: '180deg',
             }}
           >
-            <div className="circles">
+            <animated.div
+              className="eventCircle"
+              style={{
+                opacity: eventProps.opacity,
+                transform: eventProps.scale.to(transEventCircle),
+              }}
+            />
+            <div className="circles" onClick={onCirclesClick}>
               <PromoBackCircle1 className={'circle1'} />
               <AnimatedCircle2
                 className={'circle2'}

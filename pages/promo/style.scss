@@ -26,6 +26,18 @@
     }
   }
 
+  .eventCircle {
+    position: absolute;
+    width: 209px;
+    height: 209px;
+    top: 258px;
+    left: 247px;
+    border-radius: 100%;
+    background: #5BC4F1;
+    pointer-events: none;
+    z-index: 100;
+  }
+
   .circles {
     position: absolute;
     width: 209px;
@@ -60,6 +72,7 @@
     position: absolute;
     top: 118px;
     left: 110px;
+    pointer-events: none;
   }
 
   .text {
