@@ -8,7 +8,7 @@ function Faq() {
   const timeoutForConsole = () => {
     setTimeout(() => {
       console.clear();
-      console.log('%c /myo ', 'color: white; background-color: #2274A5; font-size: 32px;');
+      console.log('%c /xnmjwx ', 'color: white; background-color: #2274A5; font-size: 32px;');
       setShowThanks(true);
     }, 5000);
   };
