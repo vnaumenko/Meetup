@@ -8,11 +8,7 @@ function Faq() {
   const timeoutForConsole = () => {
     setTimeout(() => {
       console.clear();
-      console.log(
-        '%c СЮРПРИЗ ',
-        'color: white; background-color: #2274A5; font-size: 32px;',
-        'секретное слово'
-      );
+      console.log('%c /myo ', 'color: white; background-color: #2274A5; font-size: 32px;');
       setShowThanks(true);
     }, 5000);
   };

@@ -19,9 +19,8 @@ function Event({ event }) {
     if (formSent) {
       console.clear();
       console.log(
-        '%c СЮРПРИЗ ',
-        'color: white; background-color: #2274A5; font-size: 32px;',
-        'секретное слово'
+        '%c /iqgyrmtjvunhuwm ',
+        'color: white; background-color: #2274A5; font-size: 32px;'
       );
     }
   }, [formSent]);
@@ -93,12 +92,12 @@ function Event({ event }) {
           <br />
           не забудь заглянуть в консоль,
           <br />
-          там подарок. 😉
+          там сюрприз 😉
         </>
       );
 
     return (
-      <button type="button" className="btn btn-primary mt-auto" onClick={openModal}>
+      <button type="button" className="btn btn-primary" onClick={openModal}>
         Записаться
       </button>
     );
@@ -116,7 +115,7 @@ function Event({ event }) {
             </div>
           </div>
           <p className="title">{event.label}</p>
-          {renderButton()}
+          <div className="mt-auto">{renderButton()}</div>
         </div>
         {renderIllustration()}
       </div>
