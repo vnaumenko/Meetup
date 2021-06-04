@@ -1,7 +1,5 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
-import { useState } from 'react';
-
 import PromoFront from '../../public/promo-front.svg';
 import PromoBackCircle1 from '../../public/promo-back_circle1.svg';
 import PromoBackCircle2 from '../../public/promo-back_circle2.svg';
@@ -83,7 +81,7 @@ function Promo() {
   const transLabel = (value) => `rotate(${value}deg)`;
 
   return (
-    <div id={'main'} {...bindParallax()}>
+    <div id={'promo'} {...bindParallax()}>
       <div className="container">
         <div className="svgContainer">
           <animated.div

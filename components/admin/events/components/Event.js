@@ -64,8 +64,20 @@ export function Event({ event, onEventChanged }) {
   const isSubmitDisabled = Object.values(form).some((value) => !value);
 
   const renderIllustration = () => {
-    if (event.type === 'hard') return <HardIllustration />;
-    if (event.type === 'lifestyle') return <LifestyleIllustration />;
+    if (event.type === 'hard')
+      return (
+        <div className={'illustration illustration-hard'}>
+          <HardIllustration />
+          <p>HARD</p>
+        </div>
+      );
+    if (event.type === 'lifestyle')
+      return (
+        <div className={'illustration illustration-lifestyle'}>
+          <LifestyleIllustration />
+          <p>LIFESTYLE</p>
+        </div>
+      );
     return null;
   };
 
@@ -92,7 +104,7 @@ export function Event({ event, onEventChanged }) {
             </div>
           </div>
           <p className="title">{event.label}</p>
-          <div>
+          <div className={'mt-auto'}>
             <button type="button" className="btn btn-primary btn-sm me-3" onClick={openModal}>
               Редактировать
             </button>
@@ -107,7 +119,6 @@ export function Event({ event, onEventChanged }) {
             </button>
           </div>
         </div>
-        {renderIllustration()}
         {renderIllustration()}
       </div>
       <Modal

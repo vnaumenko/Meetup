@@ -80,7 +80,7 @@ function Schedule(props) {
           дальнейших направлений развития.
         </p>
         {renderTimetable()}
-        <ScheduleIcon className="illustration" />
+        <ScheduleIcon className="illustration-top" />
       </div>
     </div>
   );

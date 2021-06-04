@@ -14,12 +14,6 @@ function Admin() {
     return null;
   };
 
-  // useEffect(() => {
-  //   router.push('/promo');
-  // }, []);
-
-  // return null;
-
   return (
     <div
       id="admin"

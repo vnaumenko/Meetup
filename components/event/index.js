@@ -57,8 +57,20 @@ function Event({ event }) {
   const isSubmitDisabled = Object.values(form).some((value) => !value);
 
   const renderIllustration = () => {
-    if (event.type === 'hard') return <HardIllustration />;
-    if (event.type === 'lifestyle') return <LifestyleIllustration />;
+    if (event.type === 'hard')
+      return (
+        <div className={'illustration illustration-hard'}>
+          <HardIllustration />
+          <p>HARD</p>
+        </div>
+      );
+    if (event.type === 'lifestyle')
+      return (
+        <div className={'illustration illustration-lifestyle'}>
+          <LifestyleIllustration />
+          <p>LIFESTYLE</p>
+        </div>
+      );
     return null;
   };
 
@@ -86,7 +98,7 @@ function Event({ event }) {
       );
 
     return (
-      <button type="button" className="btn btn-primary" onClick={openModal}>
+      <button type="button" className="btn btn-primary mt-auto" onClick={openModal}>
         Записаться
       </button>
     );
@@ -95,15 +107,17 @@ function Event({ event }) {
   return (
     <>
       <div className="timetable-event" key={event.id}>
-        <div className="header">
-          <p className="time">{renderTime()}</p>
-          <div className="person">
-            <p className="name">{event.speaker}</p>
-            <p className="department">{event.department}</p>
+        <div className="event-content">
+          <div className="header">
+            <p className="time">{renderTime()}</p>
+            <div className="person">
+              <p className="name">{event.speaker}</p>
+              <p className="department">{event.department}</p>
+            </div>
           </div>
+          <p className="title">{event.label}</p>
+          {renderButton()}
         </div>
-        <p className="title">{event.label}</p>
-        {renderButton()}
         {renderIllustration()}
       </div>
       <Modal
